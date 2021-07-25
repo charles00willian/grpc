@@ -7,6 +7,7 @@ import (
 	"gihub.com/charles00willian/grcp-go-starter/pb"
 	"gihub.com/charles00willian/grcp-go-starter/services"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -18,8 +19,8 @@ func main() {
 	}
 
 	grpcServer := grpc.NewServer()
-
 	pb.RegisterUserServiceServer(grpcServer, services.NewUserService())
+	reflection.Register(grpcServer)
 
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatal("Could not serve: %v", err)
